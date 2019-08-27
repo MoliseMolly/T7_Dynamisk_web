@@ -38,7 +38,15 @@
         /*HUSK der kun kan være en " i hver sætning, derfor skal der bruges ' og ´, før hvis det bruges inde i html koden. */
         document.querySelector("#firkant").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/frog.png" alt="frø">'
 
-        document.querySelector("#cirkel").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris"><img src="http://mabe-kea.dk/E19/pics/fox.png" alt="ræv">'
+        document.querySelector("#cirkel").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris">'
+        /*en simpel måde at gøre dette ville være at indsætte begge billeder i ' i ovenstående innerHTML */
+        /*eksempel: document.querySelector("#cirkel").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris"> <img src="http://mabe-kea.dk/E19/pics/fox.png"> ' */
+
+        /*sådan laves det med appendchild:*/
+
+        const img = document.createElement("img");
+        img.src = "http://mabe-kea.dk/E19/pics/fox.png";
+        cirkel.appendChild(img);
     </script>
 
 </body></html>
