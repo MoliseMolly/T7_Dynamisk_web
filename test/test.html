@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Se Console</h1>
+    <h2>JavaScript og tekst</h2>
+    <p>gørNoget</p>
+
+
+    <h2>Javascript som tal</h2>
+    <p>findSum </p>
+
+    <script>
+        /*JavaScript læser "" som tekst*/
+        function gørNoget() {
+            console.log("Hej der")
+        }
+
+        gørNoget();
+
+        /*Herunder læses tallene også som tekst, på grund af anførselstegn. */
+
+        function gørNoget() {
+            console.log("2" + "5")
+        }
+
+        gørNoget();
+
+        /*Alle matematiske udregninger skal stå frit for at JavaScript læser det som tal. */
+        /*Find summen, a og b er defineret i findSum. */
+        /*Inde i regnestykket, kan alle matematiske ligninger bruges. */
+
+        function findSum(a, b) {
+            const sum = a + b;
+            console.log(sum);
+        }
+
+        findSum(5, 5);
+    </script>
+</body></html>
