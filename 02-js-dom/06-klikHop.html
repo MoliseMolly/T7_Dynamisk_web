@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #firkant {
+            background-color: green;
+            height: 100px;
+            width: 100px;
+            line-height: 100px;
+            text-align: center;
+        }
+
+        #cirkel {
+            background-color: red;
+            height: 100px;
+            width: 100px;
+            line-height: 100px;
+            text-align: center;
+            border-radius: 50%;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="firkant">
+
+    </div>
+    <div id="cirkel">
+    </div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("start")
+
+
+            /*HUSK der kun kan være en " i hver sætning, derfor skal der bruges ' og ´, før hvis det bruges inde i html koden. */
+            document.querySelector("#firkant").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/frog.png" alt="frø">'
+
+            document.querySelector("#cirkel").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris">'
+        }
+
+        document.addEventListener("click", swap);
+
+        function swap() {
+
+            document.querySelector("#cirkel").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/frog.png" alt="frø">'
+
+            document.querySelector("#firkant").innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris">'
+
+
+        }
+
+        cirkel.removeEventListener("clik", noSwap)
+
+        function noSwap() {}
+    </script>
+
+</body></html>
