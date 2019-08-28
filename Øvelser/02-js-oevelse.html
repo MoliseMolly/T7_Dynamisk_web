@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>js-oevelse-2</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Optima, sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.8rem;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .h1 {
+            padding: 0;
+            margin: 0 0 3rem 0;
+            font-size: 3rem;
+            line-height: 3rem;
+            color: burlywood;
+        }
+
+        footer {
+            display: inline-block;
+            width: 50vw;
+            text-align: left;
+            margin: 50px;
+        }
+
+        #butWrapper {
+            display: inline-block;
+            width: 30vw;
+            height: 30vw;
+            margin: 50px;
+        }
+
+        #bigBut {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30vw;
+            height: 30vw;
+            border: 1px solid silver;
+            border-radius: 30vw;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1 class="h1"> JS øvelse 2 </h1>
+        </header>
+        <main>
+            <section id="butWrapper">
+                <div id="bigBut">
+                    Hover mig !
+                </div>
+            </section>
+        </main>
+        <footer>
+            <h5>1 - Instrukser Overblik</h5>
+            <p> Knappen skal skifte tekst når man rør ved den med musen - til noget du selv synes er sjovt.
+                <br> Når musen fjerner sig, skal teksten skifte tilbage igen.
+                <br> knappens id er "bigBut".
+                <br>
+            </p>
+            <h5>2 - Instrukser med Hjælp </h5>
+            <p> Initialiser scriptet (se materiale om start funktion).
+                <br> knappen skal selectes og kalde 2 funktioner - denne gang med en anden event end "click". En knapfunktion til at "røre" og en andent il at "slippe" knappen igen.
+                <br> Da du skal bruge den selectede knap mange gange er det smart at gemme den som variabel. (i toppen af scriptet)
+                <br> I knappens funktioner: Vælg den dom-manipulation, som kan erstatte en tekst..
+                <br> Finte: Gem den oprindelige tekst i en variabel, og også den nye.
+                <br> Alle variabler skal ligge udenfor funktionerne, i toppen af scriptet, for at kunne læses af funktionerne..
+
+            </p>
+            <h5>3 - Videre - Hvis du gider </h5>
+            <p> Lad også knappen skrive forskellige tekster når man klikker, dobbeltklikker ..
+                <br>Lad den skifte farve og blive firkantet . - se øvelse 1
+                <br>Lav en lille knap ved siden af, med sine egne ord ..
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById("bigBut").addEventListener("mouseover", function() {
+            document.getElementById("bigBut").innerHTML = " noget sjovt ";
+        });
+        /*Herunder testes der om der er en anden mulighed for at fjerne teksten "noget sjovt"*/
+        /*document.getElementById("bigBut").removeEventListener("mouseover", function() {
+                   bigBut.removeEventListener("mouseover")
+
+               });*/
+
+        /*Her fjernes teksten "noget sjovt" ovenfra og tilbage til "Hover mig!" - er dog ikke sikker på dette er meningen med øvelsen */
+        document.getElementById("bigBut").addEventListener("mouseout", function() {
+            document.getElementById("bigBut").innerHTML = " Hover mig! ";
+        });
+    </script>
+</body></html>
