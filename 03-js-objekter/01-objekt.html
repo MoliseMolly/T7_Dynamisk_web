@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Dyr</h1>
+    <article>Navn Type levested</article>
+    <img class="profil-billede">
+    <script>
+        /*Objekter*/
+        /*Enten et objekt, f.eks; bil, hus eller en person */
+
+        const dyr = {
+            navn: "gris",
+            type: "pattedyr",
+            billede: "http://mabe-kea.dk/E19/pics/pig.png",
+            levested: "svinefarm",
+
+        }
+
+        const article = document.querySelector("article");
+        article.textContent = "navn: " + dyr.navn;
+        article.textContent += " type: " +
+            dyr.type + " levested: " + dyr.levested;
+        const img = document.querySelector("img");
+        img.src = dyr.billede;
+        img.alt = "Billede af Gris";
+
+
+        console.log("navn: ", dyr.navn, "type: ", dyr.type, "levested: ", dyr.levested);
+    </script>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Galleri </title>
+</head>
+<style>
+    #firkant {
+        margin: 5px;
+        background-color: skyblue;
+
+
+    }
+</style>
+
+<body>
+    <h1>Person galleri MMD2</h1>
+    <template>
+        <article>
+            <div id="firkant">
+
+                <div id="billede">
+                    <img class="billede">
+                </div>
+                <div id="info">
+
+                    <h2></h2>
+                    <!-- <h2>github</h2>
+
+                    <h2>alder</h2>
+                    <h2>køn</h2>
+                    <h2>hold</h2>
+                    <h2>historie</h2>
+                    <h2>status</h2>-->
+                </div>
+            </div>
+
+        </article>
+    </template>
+
+
+
+    <section id="person-liste"></section>
+
+    <script>
+        const skabelon = document.querySelector("template").content;
+        const listeElm = document.querySelector("#person-liste");
+        console.log(skabelon)
+        const array = [{
+                "navn": "Agnes Hellstenius",
+                "github": "agneshellstenius",
+                "billede": " ",
+                "alder": "22",
+                "køn": "k",
+                "email": "agne4159@stud.kea.dk",
+                "hold": "a ",
+                "historie": "",
+                "status": "",
+            },
+            {
+                "navn": "Alan Engelhardt",
+                "github": "alan-engelhardt",
+                "billede": "http://ale-kea.dk/images/alan_thumb.JPG",
+                "alder": "57",
+                "køn": "m",
+                "email": "ale@kea.dk",
+                "hold": "b ",
+                "historie": "Det er aldrig for sent at få en lykkelig barndom",
+                "status": "",
+            },
+            {
+                "navn": "Alexander Rudolph Craner",
+                "github": "alex5580",
+                "billede": "https://avatars2.githubusercontent.com/u/47736532?s=460&v=4",
+                "alder": "22",
+                "køn": "m",
+                "email": "alexrcraner@gmail.com",
+                "hold": " a",
+                "historie": "husk at drikke vand folkens!",
+                "status": "",
+            }
+        ]
+
+
+        array.forEach(person => {
+            const klon = skabelon.cloneNode(true);
+            console.log(klon);
+            const h2 = klon.querySelector("h2");
+            h2.textContent += " Navn: " + person.navn;
+            h2.textContent += " GitHub: " + person.github;
+            h2.textContent += " Alder: " + person.alder;
+            h2.textContent += " Køn: " + person.køn;
+            h2.textContent += " Hold: " + person.hold;
+            h2.textContent += " Historie: " + person.historie;
+            h2.textContent += " Status: " + person.status;
+
+            const img = klon.querySelector("img");
+            img.src = person.billede;
+            img.alt = "Billede af " + person.navn;
+            listeElm.appendChild(klon);
+        })
+    </script>
+</body></html>
