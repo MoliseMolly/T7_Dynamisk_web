@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Galleri </title>
+</head>
+<style>
+    #sectionwrapper {
+        margin-left: 50px;
+        margin-right: 50px;
+        border: solid black;
+    }
+
+    #content {
+        width: 350px;
+        height: 350px;
+        padding: 10px;
+        margin: 20px;
+        background-color: skyblue;
+
+
+    }
+</style>
+
+<body>
+    <header>
+        <img src="header_img.svg" alt="Bistro Babushka logo og navn">
+    </header>
+    <div id="sectionwrapper">
+        <h1>Menu</h1>
+        <template>
+
+            <article id="content">
+
+                <div id="billede">
+                    <img class="billede">
+                </div>
+                <div id="info">
+
+                    <h2></h2>
+                    <h5></h5>
+                    <p></p>
+
+                </div>
+
+
+            </article>
+        </template>
+
+    </div>
+
+
+    <section id="mad-liste"></section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            hentJson();
+        }
+
+        async function hentJson() {
+            const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            mad = await myJson.json();
+            visMad();
+        }
+
+        function visMad() {
+            document.querySelector("template").content;
+            const listeElm = document.querySelector("#mad-liste");
+            console.log(skabelon)
+            mad.feed.entry.forEach(mad => {
+                const klon = skabelon.cloneNode(true);
+                console.log(klon);
+                const h2 = klon.querySelector("h2");
+                h2.textContent += mad.gsx$navn.$t;
+
+                const h5 = klon.querySelector("h5");
+
+
+                h5.textContent += mad.gsx$kort.$t;
+
+                const p = klon.querySelector("p");
+                p.textContent += "Pris: " + mad.gsx$pris.$t + ",-";
+
+                const img = klon.querySelector("img");
+                img.src = mad.billede;
+                img.alt = "Billede af " + mad.gsx$navn.$t;
+                listeElm.appendChild(klon);
+            })
+        }
+
+        /* const skabelon = document.querySelector("template").content;
+         const listeElm = document.querySelector("#ret-liste");
+         console.log(skabelon)
+         const array = [{
+                 "id": "10",
+                 "kategori": "forretter",
+                 "navn": "Russisk ringbrød",
+                 "pris": "29",
+                 "kort": "Russisk ringbrød af Karapatisk mel ",
+                 "lang": "Russisk ringbrød efter en klassisk opskrift fra Karapatien. Dejen blandes koldhæver 30 dage, inde brødet bages over bål. Meget sprødt, godt med Karapatisk bjerggedsmør.",
+                 "oprindelse": "Karapatien",
+                 "billede": "",
+             },
+             {
+                 "id": "12",
+                 "kategori": "forretter",
+                 "navn": "Cabanossi med rødbedecreme",
+                 "pris": "49",
+                 "kort": "Cabanossi med rødbedecreme og løg",
+                 "lang": "Cabanossi med rødbedecreme og creme er egentlig en forret, men kammerat Vladimir elskede denne ret så højt, at han forbød restauranter i Krigien at sælge det som andet end en hovedret. Vi anbefaler det dog som forret, inden en god Bortsjs. Skylles helst ned med vodka.",
+                 "oprindelse": "rodbede-cabanossi",
+                 "billede": "",
+             },
+         ]*/
+
+
+        /*  mad.forEach(mad => {
+              const klon = skabelon.cloneNode(true);
+              console.log(klon);
+              const h2 = klon.querySelector("h2");
+              h2.textContent += mad.navn;
+
+              const h5 = klon.querySelector("h5");
+
+
+              h5.textContent += mad.kort;
+
+              const p = klon.querySelector("p");
+              p.textContent += "Pris: " + mad.pris + ",-";
+
+              const img = klon.querySelector("img");
+              img.src = mad.billede;
+              img.alt = "Billede af " + mad.navn;
+              listeElm.appendChild(klon);
+          })*/
+    </script>
+</body></html>
