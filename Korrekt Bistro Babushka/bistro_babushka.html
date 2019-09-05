@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        #liste {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+        }
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+        .menu,
+        h1 {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .mad {
+            padding: 1em;
+            padding: 10px;
+            background-color: gainsboro;
+            border: solid lightgrey 1px;
+        }
+
+        button {
+            margin: .5em;
+            background-color: whitesmoke;
+            border-radius: 10%;
+            border: solid lightgray 1px;
+        }
+
+        .valgt {
+            background-color: lightgray;
+        }
+
+        @media screen and (min-width:600px) {
+
+            #liste {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                padding: 10px;
+            }
+        }
+
+        @media screen and (min-width:768px) {
+            #liste {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 960px;
+                margin: 0 auto;
+
+            }
+
+            footer {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                padding: 10px;
+            }
+        }
+
+        footer {
+            margin-top: 10px;
+            background: gray;
+            color: white;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="header_img.svg" alt="Bistro Babushka logo og navn">
+    </header>
+
+    <nav class="menu">
+        <button data-kategori="alle" class="valgt">Alle</button>
+        <button data-kategori="forretter">Forretter</button>
+        <button data-kategori="hovedretter">Hovedretter</button>
+        <button data-kategori="desserter">Desserter</button>
+        <button data-kategori="drikkevarer">Drikkevarer</button>
+    </nav>
+
+    <h1>Menu</h1>
+
+    <section id="liste"></section>
+
+
+    <template>
+        <article class="mad">
+            <img src="" alt="" class="billede">
+            <h2 class="navn"></h2>
+            <p class="kort"></p>
+            <p class="pris"></p>
+
+        </article>
+    </template>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltMad">
+                <h2></h2>
+                <img class="billede" src="" alt="">
+                <p class="lang"></p>
+                <p class="oprindelse"></p>
+            </article>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer_left">
+            <address>Addresse: <br>Grønnegade 97<br>1234 København K </address>
+        </div>
+        <div class="footer_right">
+
+            <aside>Åbningstider: <br> Mandag – fredag 10:30 – 22:00<br>Lørdag 12:00 – 23:00</aside>
+        </div>
+
+    </footer>
+
+
+    <script>
+        /*Herunder sikres at JavaScriptet først udføres når DOM er loaded*/
+        document.addEventListener("DOMContentLoaded", loadData);
+
+        /*Herunder hentes informationen fra Google sheets, omformes til JSON og indsættes i den første template.*/
+
+        const sheetID = "17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0";
+        const url = `https://spreadsheets.google.com/feeds/list/${sheetID}/od6/public/values?alt=json`;
+
+        /**/
+
+        const liste = document.querySelector("#liste");
+        const skabelon = document.querySelector("template").content;
+        const h1 = document.querySelector("h1");
+        const filterKnapper = document.querySelectorAll("button");
+        let data;
+        let filter = "alle";
+        filterKnapper.forEach(knap => knap.addEventListener("click", filtrer));
+
+        function filtrer() {
+            console.log(filter);
+            filter = this.dataset.kategori;
+            h1.textContent = this.textContent;
+            filterKnapper.forEach(knap => knap.classList.remove("valgt"));
+            this.classList.add("valgt");
+            vis(data);
+        }
+
+
+        async function loadData() {
+            const response = await fetch(url);
+            data = await response.json();
+            vis(data);
+        }
+
+        function vis(data) {
+            liste.textContent = "";
+            data.feed.entry.forEach(mad => {
+                //console.log(mad.gsx$kort.$t)
+                if (mad.gsx$kategori.$t == filter || filter == "alle") {
+                    const klon = skabelon.cloneNode(true);
+                    const navn = mad.gsx$navn.$t;
+                    const kort = mad.gsx$kort.$t;
+                    const pris = mad.gsx$pris.$t;
+                    const billede = mad.gsx$billede.$t;
+                    klon.querySelector(".navn").textContent = navn;
+                    klon.querySelector(".kort").textContent += kort;
+                    klon.querySelector(".pris").textContent += "Pris: " + mad.gsx$pris.$t + ",-";
+                    klon.querySelector(".billede").src = "imgs/small/" +
+                        mad.gsx$billede.$t + "-sm.jpg";
+                    klon.querySelector(".billede").alt = "Billede af " + mad.gsx$navn.$t;
+                    /*Herunder sættes informationen ind på hjemmesiden.
+
+                Til sidst indsætter vi informationen i templaten så dataen hentet fra json bliver vist i listen */
+                    liste.appendChild(klon);
+
+
+                    /*Herunder gøres visEnkel til en klikbar i templaten */
+                    liste.lastElementChild.addEventListener("click", () => {
+                        visEnkel(mad)
+                    });
+                }
+            })
+        }
+
+        function visEnkel(mad) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lukEnkel);
+
+
+            document.querySelector(".enkeltMad h2").textContent = mad.gsx$navn.$t;
+
+            document.querySelector(".enkeltMad .billede").src = "imgs/small/" +
+                mad.gsx$billede.$t + "-sm.jpg";
+
+            document.querySelector(".enkeltMad .billede").alt = "Billede af " + mad.gsx$navn.$t;
+
+
+            document.querySelector(".enkeltMad .lang").textContent = mad.gsx$lang.$t;
+
+            document.querySelector(".enkeltMad .oprindelse").textContent = mad.gsx$oprindelse.$t;
+
+        }
+
+        function lukEnkel() {
+            document.querySelector("#popup").style.display = "none";
+        }
+    </script>
+
+</body></html>
